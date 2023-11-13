@@ -12,10 +12,13 @@ class tic_tac_toe_model():
     def print_game(self):
         matriz = self.matriz
         substituicoes = {1: "X", 2: "O", 0:' '}
-        for linha in matriz:
+        
+        cabecalho = [str(i) for i in range(0,self.n)]
+        print(' ', ' | '.join(cabecalho))
+        for i,linha in enumerate(matriz):
             linha_formatada = [str(substituicoes.get(valor, valor)) for valor in linha]
-            print(" | ".join(linha_formatada))
-            print("-" * 9)
+            print(i, " | ".join(linha_formatada))
+            print("-" * 12)
     
 
     def number_ij(self, number):

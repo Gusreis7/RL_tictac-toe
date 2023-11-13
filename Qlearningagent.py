@@ -1,7 +1,7 @@
 import random
 
 import json
-
+import ast
 class QlearningAgent():
     def __init__(self, epsilon,alpha ,discount_factor, train):
         self.q_table = {}
@@ -13,12 +13,24 @@ class QlearningAgent():
         self.train = train
 
     def save_agent_dict(self, file_name):
-        with open(file_name, 'w') as file_json:
-            json.dump(self.q_table, file_json)
+         # Convert tuple keys to strings
+        q_table_str_keys = {str(key): value for key, value in self.q_table.items()}
 
-    def load_agente_from_json(self, file_name):
-        with open(file_name, 'r') as file_json:
-            self.q_table = json.load(file_json)
+        with open(file_name, 'w') as file_json:
+            json.dump(q_table_str_keys, file_json)
+
+    def load_agent_dict(self, file_name):
+        try:
+            with open(file_name, 'r') as file_json:
+                json_data = json.load(file_json)
+
+            # Convert string keys back to tuples
+            q_table = {ast.literal_eval(key): value for key, value in json_data.items()}
+            
+            self.q_table = q_table
+            print("Q-table loaded successfully.")
+        except FileNotFoundError:
+            print(f"File '{file_name}' not found. Q-table not loaded.")
 
     def get_q_value(self, state, action, piece):
         state_tuple = tuple(state.flatten())

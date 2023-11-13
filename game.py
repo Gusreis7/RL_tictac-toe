@@ -8,7 +8,6 @@ class Game():
         self.board = tic_tac_toe
         self.q_agent = q_agent
     
-
     def ia_vs_ia(self):
         game_over = False
         self.board.reset_matrix()
@@ -84,9 +83,9 @@ class Game():
                 if w != 4:
                     win_piece = w
                     break
-                print("Jogue Usuario - O")
-                mv = int(input())
-                i,j = self.board.number_ij(mv)
+                print("Jogue Usuario - O [Numero da linha][Numero da coluna]")
+                ml,mv = int(input()), int(input())
+                self.board.move(ml,mv,user)
                 self.board.move(i,j,user)
                 self.board.print_game()
                 w = self.board.check_win()
@@ -96,10 +95,10 @@ class Game():
 
         else:
              while not game_over:
-                print('Jogue Usuario - X')
-                mv = int(input())
-                i,j = self.board.number_ij(mv)
-                self.board.move(i,j,user)
+                print('Jogue Usuario - X [Numero da linha][Numero da coluna]')
+                ml,mv = int(input()), int(input())
+
+                self.board.move(ml,mv,user)
                 self.board.print_game()
                 w = self.board.check_win()
                 if w != 4:
