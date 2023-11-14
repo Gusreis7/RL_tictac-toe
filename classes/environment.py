@@ -1,6 +1,6 @@
 import tqdm
-from tictactoemodel import tic_tac_toe_model
-from Qlearningagent import QlearningAgent
+from classes.game_model import tic_tac_toe_model
+from classes.Qlearningagent import QlearningAgent
 
 class environment():
     def __init__(self, tic_tac_toe: tic_tac_toe_model, q_agent: QlearningAgent, train: bool):
@@ -166,8 +166,6 @@ class environment():
         print(f'Playing {n} games with O')
         for i in tqdm.tqdm(range(0,n)):
             wins_o.append(self.play_one_game(piece=2))
-            #print(wins_o[i])
-            #print("====================================")
 
         print(f'Playing {n} games ia vs ia')
         for i in tqdm.tqdm(range(0,n)):

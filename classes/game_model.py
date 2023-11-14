@@ -30,6 +30,7 @@ class tic_tac_toe_model():
         avaible_moves = np.ravel_multi_index(np.where(self.matriz == 0), self.matriz.shape)
         return list(avaible_moves)
 
+
     def get_random_move(self, piece):
         possible_move_i, possible_move_j = np.where(self.matriz == 0)
         if possible_move_j.shape[0] > 0:  # Verifica se há movimentos possíveis
@@ -37,11 +38,11 @@ class tic_tac_toe_model():
             self.move(possible_move_i[index], possible_move_j[index], piece)
 
 
-
     def move(self,index_i,index_j,piece):
         if self.matriz[index_i][index_j] == 0:
             self.matriz[index_i][index_j] = piece
         
+    
     
     def reward_piece(self,piece):
         w = self.check_win()

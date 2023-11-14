@@ -1,7 +1,7 @@
 import tqdm
 import random
-from tictactoemodel import tic_tac_toe_model
-from Qlearningagent import QlearningAgent
+from classes.game_model import tic_tac_toe_model
+from classes.Qlearningagent import QlearningAgent
 
 class Game():
     def __init__(self, tic_tac_toe: tic_tac_toe_model, q_agent: QlearningAgent):

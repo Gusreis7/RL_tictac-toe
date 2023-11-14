@@ -2,27 +2,26 @@ import tqdm
 import random
 import argparse
 import numpy as np
-from tictactoemodel import tic_tac_toe_model
-from Qlearningagent import QlearningAgent
-from environment import environment
-from game import Game
+from classes.game_model import tic_tac_toe_model
+from classes.Qlearningagent import QlearningAgent
+from classes.environment import environment
+from classes.game import Game
 
 
 def print_stats(games, piece, rounds):
     enemy_piece = 2 if piece == 1 else 1
     text_piece = 'X' if piece == 1 else 'O'
-    text_enemy = 'O' if piece == 1 else 'X'
     print(f"wins_games[{text_piece}]: {np.where(games==piece)[0].shape[0]*100/rounds}%\n",
-        f"losses_games[{text_enemy}]: {np.where(games==enemy_piece)[0].shape[0]*100/rounds}%\n",
+        f"losses_games[{text_piece}]: {np.where(games==enemy_piece)[0].shape[0]*100/rounds}%\n",
         f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds}%\n")
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--rounds', type=int, required=True)
-    parser.add_argument('--epsilon', type=float, required=False, default=0.9)
+    parser.add_argument('--rounds', type=int, required=False, default=1000)
+    parser.add_argument('--epsilon', type=float, required=False, default=0.5)
     parser.add_argument('--alpha', type=float, required=False, default=0.6)
-    parser.add_argument('--discount_factor', type=float, required=False, default=0.9)
+    parser.add_argument('--discount_factor', type=float, required=False, default=0.7)
     args = parser.parse_args()
 
     board = tic_tac_toe_model(3)
