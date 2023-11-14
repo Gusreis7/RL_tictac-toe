@@ -7,6 +7,16 @@ from Qlearningagent import QlearningAgent
 from environment import environment
 from game import Game
 
+
+def print_stats(games, piece, rounds):
+    enemy_piece = 2 if piece == 1 else 1
+    text_piece = 'X' if piece == 1 else 'O'
+    text_enemy = 'O' if piece == 1 else 'X'
+    print(f"wins_games[{text_piece}]: {np.where(games==piece)[0].shape[0]*100/rounds}%\n",
+        f"losses_games[{text_enemy}]: {np.where(games==enemy_piece)[0].shape[0]*100/rounds}%\n",
+        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds}%\n")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--rounds', type=int, required=True)
@@ -26,22 +36,14 @@ def main():
 
     print("IA VS IA")
     games = np.array(wins_ia)
-    print('IA[X] vs IA[O]')
-    print(f"wins_games[x]: {np.where(games==1)[0].shape[0]*100/rounds}%\n",
-        f"losses_games[x]: {np.where(games==2)[0].shape[0]*100/rounds}%\n",
-        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds}%\n")
-
+    print_stats(games,1,rounds)
     print('IA[X] vs Random ')
     games = np.array(wins_x)
-    print(f"wins_games: {np.where(games==1)[0].shape[0]*100/rounds}%\n",
-        f"losses_games: {np.where(games==2)[0].shape[0]*100/rounds}%\n",
-        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds}%\n")
+    print_stats(games,1,rounds)
 
     print('IA[0] vs Random ')
     games = np.array(wins_o)
-    print(f"wins_games: {np.where(games==2)[0].shape[0]*100/rounds}%\n",
-        f"losses_games: {np.where(games==1)[0].shape[0]*100/rounds}%\n",
-        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds}%\n")
+    print_stats(games,2,rounds)
     
     print('Running 1000 test games without epsilon factor')
     q_agent.epsilon = 0
@@ -52,58 +54,20 @@ def main():
     print("Test results")
     print("IA VS IA")
     games = np.array(wins_ia)
-    print('IA[X] vs IA[O]')
-    print(f"wins_games[x]: {np.where(games==1)[0].shape[0]*100/rounds_test}%\n",
-        f"losses_games[x]: {np.where(games==2)[0].shape[0]*100/rounds_test}%\n",
-        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds_test}%\n")
-
+    print_stats(games,1,rounds_test)
     print('IA[X] vs Random ')
     games = np.array(wins_x)
-    print(f"wins_games: {np.where(games==1)[0].shape[0]*100/rounds_test}%\n",
-        f"losses_games: {np.where(games==2)[0].shape[0]*100/rounds_test}%\n",
-        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds_test}%\n")
+    print_stats(games,1,rounds_test)
 
     print('IA[0] vs Random ')
     games = np.array(wins_o)
-    print(f"wins_games: {np.where(games==2)[0].shape[0]*100/rounds_test}%\n",
-        f"losses_games: {np.where(games==1)[0].shape[0]*100/rounds_test}%\n",
-        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds_test}%\n")
+    print_stats(games,2,rounds_test)
     
     print("Saving q agent as a json file")
     file_name = f"q_agent-{args.epsilon}ep-{args.alpha}ap-{args.discount_factor}-{rounds}r.json"
     q_agent.save_agent_dict(file_name)    
-    print(f"Saved q aget at: {file_name}")
-    print("Loadind file in another q agent")
-    q_agent_2= QlearningAgent(epsilon=0,alpha=args.alpha,discount_factor=args.discount_factor, train=True)
-    q_agent_2.load_agent_dict(file_name)
-    q_agent_2.save_agent_dict(file_name+'2')
-    exp_2 = environment(board,q_agent_2, train=False)
+    print(f"Saved q_agent at: {file_name}")
 
-    rounds_test = 1000
-    wins_x,wins_o, wins_ia = exp_2.run(rounds_test)
-    print("Test results")
-    print("IA VS IA")
-    games = np.array(wins_ia)
-    print('IA[X] vs IA[O]')
-    print(f"wins_games[x]: {np.where(games==1)[0].shape[0]*100/rounds_test}%\n",
-        f"losses_games[x]: {np.where(games==2)[0].shape[0]*100/rounds_test}%\n",
-        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds_test}%\n")
-
-    print('IA[X] vs Random ')
-    games = np.array(wins_x)
-    print(f"wins_games: {np.where(games==1)[0].shape[0]*100/rounds_test}%\n",
-        f"losses_games: {np.where(games==2)[0].shape[0]*100/rounds_test}%\n",
-        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds_test}%\n")
-
-    print('IA[0] vs Random ')
-    games = np.array(wins_o)
-    print(f"wins_games: {np.where(games==2)[0].shape[0]*100/rounds_test}%\n",
-        f"losses_games: {np.where(games==1)[0].shape[0]*100/rounds_test}%\n",
-        f"draw_games: {np.where(games==3)[0].shape[0]*100/rounds_test}%\n")
-
-    
-    #game = Game(board,q_agent)
-    #game.ia_vs_user()
 
 if __name__ == '__main__':
     main()
