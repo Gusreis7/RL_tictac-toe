@@ -3,10 +3,11 @@ from classes.game_model import tic_tac_toe_model
 from classes.Qlearningagent import QlearningAgent
 
 class environment():
-    def __init__(self, tic_tac_toe: tic_tac_toe_model, q_agent: QlearningAgent, train: bool):
+    def __init__(self, tic_tac_toe: tic_tac_toe_model, q_agent: QlearningAgent, train: bool, show_stats: bool):
         self.board = tic_tac_toe
         self.q_agent = q_agent
         self.train = train
+        self.show_stats = show_stats
     
     def play_one_game(self, piece):
         game_over = False
@@ -158,17 +159,26 @@ class environment():
         wins_x = []
         wins_o = []
         wins_ia = []
-        
-        print(f'Playing {n} games with X')
-        for i in tqdm.tqdm(range(0,n)):
-            wins_x.append(self.play_one_game(piece=1))
-        
-        print(f'Playing {n} games with O')
-        for i in tqdm.tqdm(range(0,n)):
-            wins_o.append(self.play_one_game(piece=2))
+        if self.show_stats:
+            print(f'Playing {n} games with X')
+            for i in tqdm.tqdm(range(0,n)):
+                wins_x.append(self.play_one_game(piece=1))
+            
+            print(f'Playing {n} games with O')
+            for i in tqdm.tqdm(range(0,n)):
+                wins_o.append(self.play_one_game(piece=2))
 
-        print(f'Playing {n} games ia vs ia')
-        for i in tqdm.tqdm(range(0,n)):
-            wins_ia.append(self.play_ia_vs_ia())
+            print(f'Playing {n} games ia vs ia')
+            for i in tqdm.tqdm(range(0,n)):
+                wins_ia.append(self.play_ia_vs_ia())
+        else:
+            for i in range(0,n):
+                wins_x.append(self.play_one_game(piece=1))
+            
+            for i in range(0,n):
+                wins_o.append(self.play_one_game(piece=2))
+
+            for i in range(0,n):
+                wins_ia.append(self.play_ia_vs_ia())
         
         return wins_x,wins_o, wins_ia
