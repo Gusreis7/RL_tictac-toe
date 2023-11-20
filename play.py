@@ -14,5 +14,3 @@ def main():
     game.ia_vs_user()
 
 
-if __name__ == '__main__':
-    main()
