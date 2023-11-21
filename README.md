@@ -33,7 +33,7 @@ Exemplo de treinamento de um modelo usando `run.py`:
 Após o treinamento do modelo, ele é salvo em um arquivo JSON com os valores da q_table, cujo nome especifica as configurações do experimento.
 E após cada treinamento, o modelo passa por uma etapa de teste de 1000 jogos em cada modelidade
 
-Para jogar contra o modelo, basta usar o código `gradio_game.py` e indicar onde está o arquivo de configuração do `q_agent` com a flag `--file_name`.
+Para jogar localmente contra o modelo, basta usar o código `gradio_game.py` e indicar onde está o arquivo de configuração do `q_agent` com a flag `--file_name`, ou pode acessar o space: https://huggingface.co/spaces/Gustking/gradio_tictactoe.
 
 ## Analise 
 
